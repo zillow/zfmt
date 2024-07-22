@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to Semantic Versioning.
 
+## 1.0.1 (July 2024)
+
+Updated go.mod path (`gitlab.zgtools.net/devex/archetypes/gomods/zfmt` -> `github.com/zillow/zfmt`)
+
 ## 1.0.0 (July 2024)
 
 Initial release to public github.com
