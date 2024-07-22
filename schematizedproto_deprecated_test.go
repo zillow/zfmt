@@ -5,7 +5,7 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
-	example2 "gitlab.zgtools.net/devex/archetypes/gomods/zfmt/testdata/example"
+	example2 "github.com/zillow/zfmt/testdata/example"
 )
 
 func TestSchematizedProtoDeprecatedFormatter_Marshall(t *testing.T) {

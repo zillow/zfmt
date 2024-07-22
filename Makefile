@@ -17,3 +17,11 @@ golangci-lint:
 		(cd $(mod) && \
 		echo "[lint] golangci-lint: $(mod)" && \
 		golangci-lint run --path-prefix $(mod) ./...) &&) true
+
+.PHONY: gen
+gen:
+	cd testdata; go run github.com/actgardner/gogen-avro/v10/cmd/...@v10.2.1 -containers . ./example.avsc
+	cd testdata; go run github.com/heetch/avro/cmd/avrogo@v0.4.5 -p heetch -d ./heetch ./example.avsc
+	cd testdata; protoc --proto_path=. --go_out=./ ./example.proto
+
+

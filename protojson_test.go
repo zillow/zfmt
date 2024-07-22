@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"gitlab.zgtools.net/devex/archetypes/gomods/zfmt/testdata/example"
+	"github.com/zillow/zfmt/testdata/example"
 )
 
 func TestProtoJSONFormatter_MarshallUnmarshall(t *testing.T) {
