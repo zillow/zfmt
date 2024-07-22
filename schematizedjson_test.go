@@ -5,7 +5,7 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 
-	av "gitlab.zgtools.net/devex/archetypes/gomods/zfmt/testdata"
+	av "github.com/zillow/zfmt/testdata"
 )
 
 func TestSchematizedJsonFormatter_Marshall(t *testing.T) {

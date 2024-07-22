@@ -1,4 +1,4 @@
-module gitlab.zgtools.net/devex/archetypes/gomods/zfmt
+module github.com/zillow/zfmt
 
 go 1.22
 

@@ -5,9 +5,9 @@ import (
 	"reflect"
 	"testing"
 
-	"gitlab.zgtools.net/devex/archetypes/gomods/zfmt/testdata/heetch"
+	"github.com/zillow/zfmt/testdata/heetch"
 
-	av "gitlab.zgtools.net/devex/archetypes/gomods/zfmt/testdata"
+	av "github.com/zillow/zfmt/testdata"
 )
 
 func TestSchematizedAvroFormatter_Marshall(t *testing.T) {

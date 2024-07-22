@@ -3,7 +3,7 @@ package zfmt
 import (
 	"testing"
 
-	"gitlab.zgtools.net/devex/archetypes/gomods/zfmt/testdata/example"
+	"github.com/zillow/zfmt/testdata/example"
 )
 
 func TestProtoRawFormatter_MarshallUnmarshall(t *testing.T) {
