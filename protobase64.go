@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"fmt"
 
+	//nolint:staticcheck // Older zillow libs have generated code which uses this deprecated package. To maintain backwards compatability with them, the older proto serialization lib should be maintained
 	v1proto "github.com/golang/protobuf/proto"
 	v2proto "google.golang.org/protobuf/proto"
 )
