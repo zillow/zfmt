@@ -46,3 +46,5 @@ liquibase.properties
 
 
 coverage.txt
+cover.out
+cover.html
