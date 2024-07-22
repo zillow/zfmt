@@ -14,7 +14,7 @@ func TestSchematizedJsonFormatter_Marshall(t *testing.T) {
 		SchemaID          int
 	}
 	type args struct {
-		v interface{}
+		v any
 	}
 	tests := []struct {
 		name    string

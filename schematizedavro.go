@@ -14,17 +14,17 @@ type SchematizedAvroFormatter struct {
 }
 
 // Marshall converts input into avro binary data with schema ID attached
-func (p *SchematizedAvroFormatter) Marshall(v interface{}) ([]byte, error) {
+func (p *SchematizedAvroFormatter) Marshall(v any) ([]byte, error) {
 	return marshall(&p.formatter, p.SchemaID, v)
 }
 
 // Unmarshal fills avro binary data into provided interface v and validates the schema ID
-func (p *SchematizedAvroFormatter) Unmarshal(b []byte, v interface{}) error {
+func (p *SchematizedAvroFormatter) Unmarshal(b []byte, v any) error {
 	return unmarshal(&p.formatter, p.SchemaID, b, v)
 }
 
 // marshall converts input into binary data with schema ID also encoded via the wire format
-func marshall(fmtter Formatter, schemaID int, v interface{}) ([]byte, error) {
+func marshall(fmtter Formatter, schemaID int, v any) ([]byte, error) {
 	data, err := fmtter.Marshall(v)
 	if err != nil {
 		return nil, err
@@ -44,7 +44,7 @@ func marshall(fmtter Formatter, schemaID int, v interface{}) ([]byte, error) {
 }
 
 // Unmarshal fills binary data into provided interface v and validates the schema ID
-func unmarshal(fmtter Formatter, schemaID int, b []byte, v interface{}) error {
+func unmarshal(fmtter Formatter, schemaID int, b []byte, v any) error {
 	if len(b) < 5 {
 		return errors.New("message does not contain schema")
 	}

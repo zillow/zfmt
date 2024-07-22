@@ -6,7 +6,7 @@ toolchain go1.22.1
 
 require (
 	github.com/actgardner/gogen-avro/v10 v10.2.1
-	github.com/golang/protobuf v1.5.0
+	github.com/golang/protobuf v1.5.4
 	github.com/google/go-cmp v0.6.0
 	github.com/heetch/avro v0.4.5
 	github.com/stretchr/testify v1.9.0

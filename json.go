@@ -5,12 +5,10 @@ import "encoding/json"
 // JSONFormatter encodes/decodes go struct to json format
 type JSONFormatter struct{}
 
-// Marshall ...
-func (j *JSONFormatter) Marshall(v interface{}) ([]byte, error) {
+func (j *JSONFormatter) Marshall(v any) ([]byte, error) {
 	return json.Marshal(v)
 }
 
-// Unmarshal ...
-func (j *JSONFormatter) Unmarshal(b []byte, v interface{}) error {
+func (j *JSONFormatter) Unmarshal(b []byte, v any) error {
 	return json.Unmarshal(b, v)
 }

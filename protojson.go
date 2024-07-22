@@ -10,8 +10,7 @@ import (
 // ProtoJSONFormatter encodes/decodes proto go struct to json format
 type ProtoJSONFormatter struct{}
 
-// Marshall ...
-func (j *ProtoJSONFormatter) Marshall(v interface{}) ([]byte, error) {
+func (j *ProtoJSONFormatter) Marshall(v any) ([]byte, error) {
 
 	if m, ok := v.(proto.Message); ok {
 		return protojson.Marshal(m)
@@ -20,8 +19,7 @@ func (j *ProtoJSONFormatter) Marshall(v interface{}) ([]byte, error) {
 	return nil, fmt.Errorf("%T, protojson formatter can only be used with proto messages", v)
 }
 
-// Unmarshal ...
-func (j *ProtoJSONFormatter) Unmarshal(b []byte, v interface{}) error {
+func (j *ProtoJSONFormatter) Unmarshal(b []byte, v any) error {
 	if m, ok := v.(proto.Message); ok {
 		unmarshaller := protojson.UnmarshalOptions{DiscardUnknown: true}
 		return unmarshaller.Unmarshal(b, m)

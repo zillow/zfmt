@@ -8,7 +8,7 @@ import (
 
 func TestStringFormatter_Marshall(t *testing.T) {
 	type args struct {
-		i interface{}
+		i any
 	}
 	tests := []struct {
 		name    string
@@ -64,7 +64,7 @@ func TestStringFormatter_Marshall(t *testing.T) {
 func TestStringFormatter_Unmarshal(t *testing.T) {
 	type args struct {
 		b []byte
-		i interface{}
+		i any
 	}
 	tests := []struct {
 		name    string

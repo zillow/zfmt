@@ -30,8 +30,8 @@ const (
 
 // Formatter allows the user to extend formatting capability to unsupported data types
 type Formatter interface {
-	Marshall(v interface{}) ([]byte, error)
-	Unmarshal(data []byte, v interface{}) error
+	Marshall(v any) ([]byte, error)
+	Unmarshal(data []byte, v any) error
 }
 
 // GetFormatter returns supported formatter from its name

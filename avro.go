@@ -20,11 +20,9 @@ type GeneratedAvroRecord interface {
 	Schema() string
 }
 
-// AvroFormatter ...
 type AvroFormatter struct{}
 
-// Marshall ...
-func (p *AvroFormatter) Marshall(v interface{}) ([]byte, error) {
+func (p *AvroFormatter) Marshall(v any) ([]byte, error) {
 	switch m := v.(type) {
 	case soe.AvroRecord:
 		buf := &bytes.Buffer{}
@@ -38,8 +36,7 @@ func (p *AvroFormatter) Marshall(v interface{}) ([]byte, error) {
 	}
 }
 
-// Unmarshal ...
-func (p *AvroFormatter) Unmarshal(b []byte, v interface{}) error {
+func (p *AvroFormatter) Unmarshal(b []byte, v any) error {
 	switch m := v.(type) {
 	case GeneratedAvroRecord:
 		r := bytes.NewReader(b)

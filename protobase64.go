@@ -11,8 +11,8 @@ import (
 // ProtobufBase64Formatter implements formatter interface for both protobuf v1 and v2 messages. Intended for use with SQS
 type ProtobufBase64Formatter struct{}
 
-// Marshall with base64 encoding
-func (p *ProtobufBase64Formatter) Marshall(v interface{}) ([]byte, error) {
+// Marshall as proto and then base64 encode (useful for technologies like SQS which limit the character set)
+func (p *ProtobufBase64Formatter) Marshall(v any) ([]byte, error) {
 	switch m := v.(type) {
 	case v1proto.Message:
 		b, err := v1proto.Marshal(m)
@@ -32,14 +32,14 @@ func (p *ProtobufBase64Formatter) Marshall(v interface{}) ([]byte, error) {
 }
 
 // Unmarshal with base64 decoding
-func (p *ProtobufBase64Formatter) Unmarshal(b []byte, v interface{}) error {
+func (p *ProtobufBase64Formatter) Unmarshal(b []byte, v any) error {
 	switch m := v.(type) {
 	case v1proto.Message:
 		raw, err := base64.StdEncoding.DecodeString(string(b))
 		if err != nil {
 			return err
 		}
-		if err = v1proto.Unmarshal(raw, m); err != nil {
+		if err := v1proto.Unmarshal(raw, m); err != nil {
 			return err
 		}
 		return nil

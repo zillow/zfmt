@@ -245,7 +245,7 @@ func file_example_proto_rawDescGZIP() []byte {
 }
 
 var file_example_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
-var file_example_proto_goTypes = []interface{}{
+var file_example_proto_goTypes = []any{
 	(*ExampleDef)(nil), // 0: tagging.ExampleDef
 	(*Foo)(nil),        // 1: tagging.Foo
 	(*Bar)(nil),        // 2: tagging.Bar
@@ -266,7 +266,7 @@ func file_example_proto_init() {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_example_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_example_proto_msgTypes[0].Exporter = func(v any, i int) any {
 			switch v := v.(*ExampleDef); i {
 			case 0:
 				return &v.state
@@ -278,7 +278,7 @@ func file_example_proto_init() {
 				return nil
 			}
 		}
-		file_example_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+		file_example_proto_msgTypes[1].Exporter = func(v any, i int) any {
 			switch v := v.(*Foo); i {
 			case 0:
 				return &v.state
@@ -290,7 +290,7 @@ func file_example_proto_init() {
 				return nil
 			}
 		}
-		file_example_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+		file_example_proto_msgTypes[2].Exporter = func(v any, i int) any {
 			switch v := v.(*Bar); i {
 			case 0:
 				return &v.state
@@ -303,7 +303,7 @@ func file_example_proto_init() {
 			}
 		}
 	}
-	file_example_proto_msgTypes[0].OneofWrappers = []interface{}{
+	file_example_proto_msgTypes[0].OneofWrappers = []any{
 		(*ExampleDef_Foo)(nil),
 		(*ExampleDef_Bar)(nil),
 	}

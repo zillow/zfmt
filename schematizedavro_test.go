@@ -2,9 +2,10 @@ package zfmt
 
 import (
 	"bytes"
-	"gitlab.zgtools.net/devex/archetypes/gomods/zfmt/testdata/heetch"
 	"reflect"
 	"testing"
+
+	"gitlab.zgtools.net/devex/archetypes/gomods/zfmt/testdata/heetch"
 
 	av "gitlab.zgtools.net/devex/archetypes/gomods/zfmt/testdata"
 )
@@ -15,7 +16,7 @@ func TestSchematizedAvroFormatter_Marshall(t *testing.T) {
 		SchemaID int
 	}
 	type args struct {
-		v interface{}
+		v any
 	}
 
 	tests := []struct {
@@ -147,9 +148,9 @@ func TestSchematizedAvroFormatter_UnmarshalNonSchematizedAvro(t *testing.T) {
 func TestSchematizedAvroFormatter_UnmarshalValidAvroWithSchemaID(t *testing.T) {
 	type testCase struct {
 		Name     string
-		Input    interface{}
-		Expected interface{}
-		Output   interface{}
+		Input    any
+		Expected any
+		Output   any
 	}
 
 	testCases := []testCase{
@@ -214,9 +215,9 @@ func TestSchematizedAvroFormatter_UnmarshalValidAvroWithSchemaID(t *testing.T) {
 func TestSchematizedAvroFormatter_UnmarshalValidAvroWithNoSchemaID(t *testing.T) {
 	type testCase struct {
 		Name     string
-		Input    interface{}
-		Expected interface{}
-		Output   interface{}
+		Input    any
+		Expected any
+		Output   any
 	}
 
 	testCases := []testCase{
@@ -285,8 +286,8 @@ func TestSchematizedAvroFormatter_UnmarshalValidAvroWithNoSchemaID(t *testing.T)
 func TestSchematizedAvroFormatter_UnmarshalValidAvroWithWrongSchemaID(t *testing.T) {
 	type testCase struct {
 		Name   string
-		Input  interface{}
-		Output interface{}
+		Input  any
+		Output any
 	}
 
 	testCases := []testCase{
@@ -334,9 +335,9 @@ func TestSchematizedAvroFormatter_UnmarshalValidAvroWithWrongSchemaID(t *testing
 func TestSchematizedAvroFormatter_Equivalency(t *testing.T) {
 	type testCase struct {
 		Name     string
-		Input    interface{}
-		Expected interface{}
-		Output   interface{}
+		Input    any
+		Expected any
+		Output   any
 	}
 
 	testCases := []testCase{
