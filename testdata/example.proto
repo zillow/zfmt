@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package tagging;
+
+option go_package = "./example";
+
+message ExampleDef {
+    string allowed = 1;
+    int32 disallowed = 2;
+    oneof example{
+        Foo foo = 3;
+        Bar bar = 4;
+    }
+}
+
+message Foo{string name = 1;}
+message Bar{string name = 1;}
