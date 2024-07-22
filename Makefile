@@ -5,7 +5,8 @@ REMOTE_GOLANGCI_VERSION=1.56.2
 
 .PHONY: cover
 cover:
-	go test -v ./... -count=1 -coverprofile=coverage.txt -covermode atomic
+	go test -v ./... -count=1 -coverprofile=cover.out -covermode atomic && \
+	go tool cover -html=cover.out -o cover.html
 
 .PHONY: lint
 lint: golangci-lint

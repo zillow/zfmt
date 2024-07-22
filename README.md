@@ -1,8 +1,8 @@
 # zfmt
 
-[![coverage report](https://gitlab.zgtools.net/devex/archetypes/gomods/zfmt/badges/main/coverage.svg)](https://gitlab.zgtools.net/devex/archetypes/gomods/zfmt/-/commits/main)
-
-[![pipeline status](https://gitlab.zgtools.net/devex/archetypes/gomods/zfmt/badges/main/pipeline.svg)](https://gitlab.zgtools.net/devex/archetypes/gomods/zfmt/-/commits/main)
+[![License](https://img.shields.io/github/license/zillow/zfmt)](https://github.com/zillow/zfmt/blob/main/LICENSE)
+[![GitHub Actions](https://github.com/zillow/zfmt/actions/workflows/go.yml/badge.svg)](https://github.com/zillow/zfmt/actions/workflows/go.yml)
+[![Codecov](https://codecov.io/gh/zillow/zfmt/branch/main/graph/badge.svg?token=STRT8T67YP)](https://codecov.io/gh/zillow/zfmt)
 
 
 A go library which contains a number of useful implementations of the Formatter interface,
