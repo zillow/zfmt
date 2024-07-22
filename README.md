@@ -8,10 +8,8 @@
 
 `go get -u github.com/zillow/zfmt`
 
-Note that zap only supports the two most recent minor versions of Go.
-
 ## About
-Note that zap only supports the two most recent minor versions of Go.
+
 A module which defines several concrete `Formatter` types responsible for serializing/deserializing objects.
 The module centralizes this functionality and is leveraged by several zillow transport libs for use in configuration
 driven serialization.
