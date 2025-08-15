@@ -1,4 +1,4 @@
-package zfmt
+package proto
 
 import (
 	"encoding/base64"
@@ -9,11 +9,15 @@ import (
 	v2proto "google.golang.org/protobuf/proto"
 )
 
-// ProtobufBase64Formatter implements formatter interface for both protobuf v1 and v2 messages. Intended for use with SQS
-type ProtobufBase64Formatter struct{}
+// Base64Formatter implements formatter interface for both protobuf v1 and v2 messages. Intended for use with SQS
+type Base64Formatter struct{}
+
+func NewBase64Formatter() Base64Formatter {
+	return Base64Formatter{}
+}
 
 // Marshall as proto and then base64 encode (useful for technologies like SQS which limit the character set)
-func (p *ProtobufBase64Formatter) Marshall(v any) ([]byte, error) {
+func (p *Base64Formatter) Marshall(v any) ([]byte, error) {
 	switch m := v.(type) {
 	case v1proto.Message:
 		b, err := v1proto.Marshal(m)
@@ -33,7 +37,7 @@ func (p *ProtobufBase64Formatter) Marshall(v any) ([]byte, error) {
 }
 
 // Unmarshal with base64 decoding
-func (p *ProtobufBase64Formatter) Unmarshal(b []byte, v any) error {
+func (p *Base64Formatter) Unmarshal(b []byte, v any) error {
 	switch m := v.(type) {
 	case v1proto.Message:
 		raw, err := base64.StdEncoding.DecodeString(string(b))

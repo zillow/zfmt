@@ -1,4 +1,4 @@
-package zfmt
+package proto
 
 import (
 	"fmt"
@@ -8,11 +8,15 @@ import (
 	v2proto "google.golang.org/protobuf/proto"
 )
 
-// ProtobufRawFormatter implements formatter interface for both protobuf v1 and v2 messages. Does not base64 encode.
-type ProtobufRawFormatter struct{}
+// RawFormatter implements formatter interface for both protobuf v1 and v2 messages. Does not base64 encode.
+type RawFormatter struct{}
+
+func NewRawFormatter() RawFormatter {
+	return RawFormatter{}
+}
 
 // Marshall encodes the data as a proto binary
-func (p *ProtobufRawFormatter) Marshall(v any) ([]byte, error) {
+func (p *RawFormatter) Marshall(v any) ([]byte, error) {
 	switch m := v.(type) {
 	case v1proto.Message:
 		b, err := v1proto.Marshal(m)
@@ -32,7 +36,7 @@ func (p *ProtobufRawFormatter) Marshall(v any) ([]byte, error) {
 }
 
 // Unmarshal accepts proto binary and hydrates a proto generated struct
-func (p *ProtobufRawFormatter) Unmarshal(b []byte, v any) error {
+func (p *RawFormatter) Unmarshal(b []byte, v any) error {
 	switch m := v.(type) {
 	case v1proto.Message:
 		if err := v1proto.Unmarshal(b, m); err != nil {

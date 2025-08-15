@@ -1,18 +1,18 @@
-package zfmt
+package avro
 
 import (
 	"bytes"
 	"reflect"
 	"testing"
 
-	"github.com/zillow/zfmt/testdata/heetch"
+	"github.com/zillow/zfmt/avro/testdata/heetch"
 
-	av "github.com/zillow/zfmt/testdata"
+	av "github.com/zillow/zfmt/avro/testdata"
 )
 
-func TestSchematizedAvroFormatter_Marshall(t *testing.T) {
+func TestSchematizedFormatter_Marshall(t *testing.T) {
 	type fields struct {
-		avroFmt  AvroFormatter
+		avroFmt  Formatter
 		SchemaID int
 	}
 	type args struct {
@@ -42,7 +42,7 @@ func TestSchematizedAvroFormatter_Marshall(t *testing.T) {
 		{
 			name: "accept reference type of an avro object, with avro formatter and schemaID",
 			fields: fields{
-				avroFmt:  AvroFormatter{},
+				avroFmt:  Formatter{},
 				SchemaID: 99,
 			},
 			args: args{
@@ -59,7 +59,7 @@ func TestSchematizedAvroFormatter_Marshall(t *testing.T) {
 		{
 			name: "accept heetch avrorecord type",
 			fields: fields{
-				avroFmt:  AvroFormatter{},
+				avroFmt:  Formatter{},
 				SchemaID: 99,
 			},
 			args: args{
@@ -76,7 +76,7 @@ func TestSchematizedAvroFormatter_Marshall(t *testing.T) {
 		{
 			name: "accept value type of an avro object",
 			fields: fields{
-				avroFmt:  AvroFormatter{},
+				avroFmt:  Formatter{},
 				SchemaID: 99,
 			},
 			args: args{
@@ -93,7 +93,7 @@ func TestSchematizedAvroFormatter_Marshall(t *testing.T) {
 		{
 			name: "do not accept random type",
 			fields: fields{
-				avroFmt:  AvroFormatter{},
+				avroFmt:  Formatter{},
 				SchemaID: 99,
 			},
 			args:    args{v: "what?"},
@@ -102,21 +102,21 @@ func TestSchematizedAvroFormatter_Marshall(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			p := &SchematizedAvroFormatter{
+			p := &SchematizedFormatter{
 				formatter: tt.fields.avroFmt,
 				SchemaID:  tt.fields.SchemaID,
 			}
 			_, err := p.Marshall(tt.args.v)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("SchematizedAvroFormatter.Marshall() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("SchematizedFormatter.Marshall() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 		})
 	}
 }
 
-func TestSchematizedAvroFormatter_UnmarshalToInvalidAvroType(t *testing.T) {
-	fmtter := &SchematizedAvroFormatter{SchemaID: 99}
+func TestSchematizedFormatter_UnmarshalToInvalidAvroType(t *testing.T) {
+	fmtter := &SchematizedFormatter{SchemaID: 99}
 	input := &av.DemoSchema{
 		IntField:    123,
 		DoubleField: 123.4,
@@ -135,17 +135,17 @@ func TestSchematizedAvroFormatter_UnmarshalToInvalidAvroType(t *testing.T) {
 	}
 }
 
-func TestSchematizedAvroFormatter_UnmarshalNonSchematizedAvro(t *testing.T) {
+func TestSchematizedFormatter_UnmarshalNonSchematizedAvro(t *testing.T) {
 	binAvro := []byte{}
 	var output bytes.Buffer
-	outFmtter := &SchematizedAvroFormatter{}
+	outFmtter := &SchematizedFormatter{}
 	err := outFmtter.Unmarshal(binAvro, &output)
 	if err == nil {
 		t.Errorf("should get error because input does not contain schema")
 	}
 }
 
-func TestSchematizedAvroFormatter_UnmarshalValidAvroWithSchemaID(t *testing.T) {
+func TestSchematizedFormatter_UnmarshalValidAvroWithSchemaID(t *testing.T) {
 	type testCase struct {
 		Name     string
 		Input    any
@@ -194,7 +194,7 @@ func TestSchematizedAvroFormatter_UnmarshalValidAvroWithSchemaID(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.Name, func(t *testing.T) {
-			fmtter := &SchematizedAvroFormatter{SchemaID: 99}
+			fmtter := &SchematizedFormatter{SchemaID: 99}
 			input := tc.Input
 			data, err := fmtter.Marshall(input)
 			if err != nil {
@@ -212,7 +212,7 @@ func TestSchematizedAvroFormatter_UnmarshalValidAvroWithSchemaID(t *testing.T) {
 	}
 }
 
-func TestSchematizedAvroFormatter_UnmarshalValidAvroWithNoSchemaID(t *testing.T) {
+func TestSchematizedFormatter_UnmarshalValidAvroWithNoSchemaID(t *testing.T) {
 	type testCase struct {
 		Name     string
 		Input    any
@@ -261,7 +261,7 @@ func TestSchematizedAvroFormatter_UnmarshalValidAvroWithNoSchemaID(t *testing.T)
 
 	for _, tc := range testCases {
 		t.Run(tc.Name, func(t *testing.T) {
-			inFmtter := &SchematizedAvroFormatter{SchemaID: 99}
+			inFmtter := &SchematizedFormatter{SchemaID: 99}
 			input := tc.Input
 			data, err := inFmtter.Marshall(input)
 			if err != nil {
@@ -269,7 +269,7 @@ func TestSchematizedAvroFormatter_UnmarshalValidAvroWithNoSchemaID(t *testing.T)
 			}
 
 			// when schemaID is unset, as long as the data is unmarshallable, we don't throw error
-			outFmtter := &SchematizedAvroFormatter{}
+			outFmtter := &SchematizedFormatter{}
 			output := tc.Output
 			err = outFmtter.Unmarshal(data, output)
 			if err != nil {
@@ -283,7 +283,7 @@ func TestSchematizedAvroFormatter_UnmarshalValidAvroWithNoSchemaID(t *testing.T)
 
 }
 
-func TestSchematizedAvroFormatter_UnmarshalValidAvroWithWrongSchemaID(t *testing.T) {
+func TestSchematizedFormatter_UnmarshalValidAvroWithWrongSchemaID(t *testing.T) {
 	type testCase struct {
 		Name   string
 		Input  any
@@ -317,13 +317,13 @@ func TestSchematizedAvroFormatter_UnmarshalValidAvroWithWrongSchemaID(t *testing
 
 	for _, tc := range testCases {
 		t.Run(tc.Name, func(t *testing.T) {
-			inFmtter := &SchematizedAvroFormatter{SchemaID: 99}
+			inFmtter := &SchematizedFormatter{SchemaID: 99}
 			data, err := inFmtter.Marshall(tc.Input)
 			if err != nil {
 				t.Errorf("should not have error marshalling %v", err)
 			}
 
-			outFmtter := &SchematizedAvroFormatter{SchemaID: 100}
+			outFmtter := &SchematizedFormatter{SchemaID: 100}
 			err = outFmtter.Unmarshal(data, tc.Output)
 			if err == nil {
 				t.Error("should have error unmarshalling due to incorrect schema ID")
@@ -332,7 +332,7 @@ func TestSchematizedAvroFormatter_UnmarshalValidAvroWithWrongSchemaID(t *testing
 	}
 }
 
-func TestSchematizedAvroFormatter_Equivalency(t *testing.T) {
+func TestSchematizedFormatter_Equivalency(t *testing.T) {
 	type testCase struct {
 		Name     string
 		Input    any
@@ -381,7 +381,7 @@ func TestSchematizedAvroFormatter_Equivalency(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.Name, func(t *testing.T) {
-			fmtter := &SchematizedAvroFormatter{SchemaID: 99}
+			fmtter := &SchematizedFormatter{SchemaID: 99}
 			input := tc.Input
 			data, err := fmtter.Marshall(input)
 			if err != nil {
