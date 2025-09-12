@@ -1,4 +1,4 @@
-package zfmt
+package json
 
 import (
 	"fmt"
@@ -7,6 +7,10 @@ import (
 
 // StringFormatter ...
 type StringFormatter struct{}
+
+func NewStringFormatter() StringFormatter {
+	return StringFormatter{}
+}
 
 // Marshall ...
 func (f *StringFormatter) Marshall(i any) ([]byte, error) {

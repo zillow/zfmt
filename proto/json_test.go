@@ -1,10 +1,10 @@
-package zfmt
+package proto
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/zillow/zfmt/testdata/example"
+	"github.com/zillow/zfmt/proto/testdata/example"
 )
 
 func TestProtoJSONFormatter_MarshallUnmarshall(t *testing.T) {
@@ -18,7 +18,7 @@ func TestProtoJSONFormatter_MarshallUnmarshall(t *testing.T) {
 		},
 	}
 
-	fmtr := ProtoJSONFormatter{}
+	fmtr := JSONFormatter{}
 
 	b, err := fmtr.Marshall(&ein)
 	if err != nil {
@@ -46,7 +46,7 @@ func TestProtoJSONFormatter_MarshallUnmarshall(t *testing.T) {
 func TestProtoJSONFormatter_UnmarshallWithUnknown(t *testing.T) {
 	data := "{\n    \"allowed\": \"happy\",\n    \"disallowed\": 2,\n    \"MyName\": \"Stewart\"\n}"
 
-	fmtr := ProtoJSONFormatter{}
+	fmtr := JSONFormatter{}
 	eout := &example.ExampleDef{}
 	err := fmtr.Unmarshal([]byte(data), eout)
 	require.NoError(t, err)

@@ -1,16 +1,16 @@
-package zfmt
+package json
 
 import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
 
-	av "github.com/zillow/zfmt/testdata"
+	av "github.com/zillow/zfmt/json/testdata"
 )
 
 func TestSchematizedJsonFormatter_Marshall(t *testing.T) {
 	type fields struct {
-		protobufFormatter JSONFormatter
+		protobufFormatter Formatter
 		SchemaID          int
 	}
 	type args struct {
@@ -35,7 +35,7 @@ func TestSchematizedJsonFormatter_Marshall(t *testing.T) {
 		{
 			name: "accept reference type of an object, with avro formatter and schemaID",
 			fields: fields{
-				protobufFormatter: JSONFormatter{},
+				protobufFormatter: Formatter{},
 				SchemaID:          99,
 			},
 			args: args{
@@ -48,7 +48,7 @@ func TestSchematizedJsonFormatter_Marshall(t *testing.T) {
 		{
 			name: "accept value type of an object, with avro formatter and schemaID",
 			fields: fields{
-				protobufFormatter: JSONFormatter{},
+				protobufFormatter: Formatter{},
 				SchemaID:          99,
 			},
 			args: args{
@@ -61,7 +61,7 @@ func TestSchematizedJsonFormatter_Marshall(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			p := &SchematizedJSONFormatter{
+			p := &SchematizedFormatter{
 				formatter: tt.fields.protobufFormatter,
 				SchemaID:  tt.fields.SchemaID,
 			}
@@ -75,8 +75,8 @@ func TestSchematizedJsonFormatter_Marshall(t *testing.T) {
 }
 
 func TestSchematizedJsonFormmater_Unmarshall_PointerType(t *testing.T) {
-	fmtter := SchematizedJSONFormatter{
-		formatter: JSONFormatter{},
+	fmtter := SchematizedFormatter{
+		formatter: Formatter{},
 		SchemaID:  123,
 	}
 	expected := av.ExampleJson{Id: "what"}
@@ -94,8 +94,8 @@ func TestSchematizedJsonFormmater_Unmarshall_PointerType(t *testing.T) {
 	}
 }
 func TestSchematizedJsonFormmater_Unmarshalll_ValueType(t *testing.T) {
-	fmtter := SchematizedJSONFormatter{
-		formatter: JSONFormatter{},
+	fmtter := SchematizedFormatter{
+		formatter: Formatter{},
 		SchemaID:  123,
 	}
 	expected := av.ExampleJson{Id: "what"}

@@ -1,4 +1,4 @@
-package zfmt
+package json
 
 import (
 	"bytes"

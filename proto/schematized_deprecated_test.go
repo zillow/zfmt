@@ -1,16 +1,16 @@
-package zfmt
+package proto
 
 import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
-	example2 "github.com/zillow/zfmt/testdata/example"
+	example2 "github.com/zillow/zfmt/proto/testdata/example"
 )
 
 func TestSchematizedProtoDeprecatedFormatter_Marshall(t *testing.T) {
 	type fields struct {
-		protobufFormatter ProtobufBase64Formatter
+		protobufFormatter Base64Formatter
 		SchemaID          int
 	}
 	type args struct {
@@ -36,7 +36,7 @@ func TestSchematizedProtoDeprecatedFormatter_Marshall(t *testing.T) {
 		{
 			name: "accept reference type of an proto object, with avro formatter and schemaID",
 			fields: fields{
-				protobufFormatter: ProtobufBase64Formatter{},
+				protobufFormatter: Base64Formatter{},
 				SchemaID:          99,
 			},
 			args: args{
@@ -50,7 +50,7 @@ func TestSchematizedProtoDeprecatedFormatter_Marshall(t *testing.T) {
 		{
 			name: "do not accept value type of a proto object",
 			fields: fields{
-				protobufFormatter: ProtobufBase64Formatter{},
+				protobufFormatter: Base64Formatter{},
 				SchemaID:          99,
 			},
 			args: args{
@@ -64,7 +64,7 @@ func TestSchematizedProtoDeprecatedFormatter_Marshall(t *testing.T) {
 		{
 			name: "do not accept random type",
 			fields: fields{
-				protobufFormatter: ProtobufBase64Formatter{},
+				protobufFormatter: Base64Formatter{},
 				SchemaID:          99,
 			},
 			args:    args{v: "what?"},
@@ -73,7 +73,7 @@ func TestSchematizedProtoDeprecatedFormatter_Marshall(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			p := &SchematizedProtoFormatterDeprecated{
+			p := &SchematizedBase64FormatterDeprecated{
 				formatter: tt.fields.protobufFormatter,
 				SchemaID:  tt.fields.SchemaID,
 			}
@@ -87,8 +87,8 @@ func TestSchematizedProtoDeprecatedFormatter_Marshall(t *testing.T) {
 }
 
 func TestSchematizedProtoDeprecatedFormmater_Unmarshall(t *testing.T) {
-	fmtter := SchematizedProtoFormatterDeprecated{
-		formatter: ProtobufBase64Formatter{},
+	fmtter := SchematizedBase64FormatterDeprecated{
+		formatter: Base64Formatter{},
 		SchemaID:  123,
 	}
 	expected := example2.ExampleDef{Allowed: "1243", Disallowed: 987}

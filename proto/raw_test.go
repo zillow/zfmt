@@ -1,12 +1,12 @@
-package zfmt
+package proto
 
 import (
 	"testing"
 
-	"github.com/zillow/zfmt/testdata/example"
+	"github.com/zillow/zfmt/proto/testdata/example"
 )
 
-func TestProtoBase64Formatter_MarshallUnmarshall(t *testing.T) {
+func TestProtoRawFormatter_MarshallUnmarshall(t *testing.T) {
 	ein := example.ExampleDef{
 		Allowed:    "happy",
 		Disallowed: 2,
@@ -17,7 +17,7 @@ func TestProtoBase64Formatter_MarshallUnmarshall(t *testing.T) {
 		},
 	}
 
-	fmtr := ProtobufBase64Formatter{}
+	fmtr := RawFormatter{}
 
 	b, err := fmtr.Marshall(&ein)
 	if err != nil {
