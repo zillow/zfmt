@@ -1,4 +1,4 @@
-package util
+package schema
 
 import (
 	"encoding/binary"
@@ -7,7 +7,7 @@ import (
 )
 
 // Unmarshal fills binary data into provided interface v and validates the schema ID
-func UnmarshalSchema(fmtter interface {
+func Unmarshal(fmtter interface {
 	Marshall(v any) ([]byte, error)
 	Unmarshal(data []byte, v any) error
 }, schemaID int, b []byte, v any) error {

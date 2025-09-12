@@ -1,4 +1,4 @@
-package util
+package schema
 
 import (
 	"bytes"
@@ -6,7 +6,7 @@ import (
 )
 
 // Marshall converts input into binary data with schema ID also encoded via the wire format
-func MarshallSchema(fmtter interface {
+func Marshall(fmtter interface {
 	Marshall(v any) ([]byte, error)
 	Unmarshal(data []byte, v any) error
 }, schemaID int, v any) ([]byte, error) {
