@@ -1,0 +1,16 @@
+// Workspace for local development and CI of this multi-module repository.
+// Consumers never see this file. It lets the formatter sub-modules build and
+// test against the root module in this checkout rather than a published
+// github.com/zillow/zfmt/v2 tag, which is also what allows CI to run before
+// a new root version is tagged.
+go 1.26
+
+use (
+	.
+	./zfmtavro
+	./zfmtjson
+	./zfmtproto
+	./zfmtstring
+)
+
+replace github.com/zillow/zfmt/v2 v2.0.0 => ./

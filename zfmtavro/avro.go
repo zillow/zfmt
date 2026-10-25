@@ -1,4 +1,4 @@
-package zfmt
+package zfmtavro
 
 import (
 	"bytes"
@@ -20,9 +20,15 @@ type GeneratedAvroRecord interface {
 	Schema() string
 }
 
-type AvroFormatter struct{}
+// Formatter encodes/decodes go struct to avro format. Supports gogen-avro and heetch/avro generated types.
+type Formatter struct{}
 
-func (p *AvroFormatter) Marshall(v any) ([]byte, error) {
+// NewFormatter returns an avro Formatter
+func NewFormatter() Formatter {
+	return Formatter{}
+}
+
+func (p Formatter) Marshal(v any) ([]byte, error) {
 	switch m := v.(type) {
 	case soe.AvroRecord:
 		buf := &bytes.Buffer{}
@@ -36,7 +42,7 @@ func (p *AvroFormatter) Marshall(v any) ([]byte, error) {
 	}
 }
 
-func (p *AvroFormatter) Unmarshal(b []byte, v any) error {
+func (p Formatter) Unmarshal(b []byte, v any) error {
 	switch m := v.(type) {
 	case GeneratedAvroRecord:
 		r := bytes.NewReader(b)
