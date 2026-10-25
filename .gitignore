@@ -49,3 +49,6 @@ coverage.txt
 cover.out
 cover.html
 codecov
+go.work.sum
+coverage.out
+coverage.html
