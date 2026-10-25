@@ -1,0 +1,11 @@
+// Workspace for local development of this multi-module repository.
+// Each formatter module is independent; the workspace only lets tooling
+// such as gopls and `go test` operate on all of them from the repository root.
+go 1.27
+
+use (
+	./zfmtavro
+	./zfmtjson
+	./zfmtproto
+	./zfmtbytes
+)

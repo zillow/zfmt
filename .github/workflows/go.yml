@@ -3,7 +3,7 @@ name: Go
 on:
   push:
     branches: [main]
-    tags: ['v*']
+    tags: ['zfmtjson/v*', 'zfmtproto/v*', 'zfmtavro/v*', 'zfmtbytes/v*']
   pull_request:
     branches: ['*']
 
@@ -15,51 +15,53 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go: ["1.21.x", "1.22.x"]
-        include:
-          - go: 1.22.x
+        go: ["1.27.x"]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@d8cbb8045d7f43706b9177cceb36c1f91a6644d5 # v7.1.0
         with:
           go-version: ${{ matrix.go }}
           cache-dependency-path: '**/go.sum'
 
+      # The Makefile runs every target with GOWORK=off, so each module is downloaded,
+      # built and tested against its own go.mod.
       - name: Download Dependencies
-        run: |
-          go mod download
+        run: make download
+
+      - name: Check go.mod files are tidy
+        run: make tidy-check
 
       - name: Test
         run: make cover
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./zfmtjson/coverage.out,./zfmtproto/coverage.out,./zfmtavro/coverage.out,./zfmtbytes/coverage.out
 
   lint:
     name: Lint
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         name: Check out repository
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@d8cbb8045d7f43706b9177cceb36c1f91a6644d5 # v7.1.0
         name: Set up Go
         with:
-          go-version: 1.22.x
+          go-version: 1.27.x
           cache: false  # managed by golangci-lint
 
-      - uses: golangci/golangci-lint-action@v6
+      - uses: golangci/golangci-lint-action@ba0d7d2ec06a0ea1cb5fa41b2e4a3ab91d21278a # v9.3.0
         name: Install golangci-lint
         with:
-          version: latest
-          # Hack: Use the official action to download, but not run.
-          # make lint below will handle actually running the linter.
-          args: --help
+          version: v2.15.0
+          # Install only; make lint runs the linter in each module.
+          install-only: true
 
       - run: make lint
         name: Lint
